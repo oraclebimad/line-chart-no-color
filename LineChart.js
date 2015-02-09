@@ -1,8 +1,8 @@
 {
   id: '03efcb62a28c.LineChart',
   component: {
-    'name': 'Line Chart',
-    'tooltip': 'Insert Line Chart'
+    'name': 'Line Bar Chart',
+    'tooltip': 'Insert Line Bar Chart'
   },
   properties: [
     {key: "width", label: "Width", type: "length", value: "320px"},
