@@ -2,7 +2,8 @@
   id: '03efcb62a28c.LineChart',
   component: {
     'name': 'Line Bar Chart',
-    'tooltip': 'Insert Line Bar Chart'
+    'tooltip': 'Insert Line Bar Chart',
+    'cssClass': 'line-chart-plugin'
   },
   properties: [
     {key: "width", label: "Width", type: "length", value: "320px"},
