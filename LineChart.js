@@ -8,12 +8,6 @@
   properties: [
     {key: "width", label: "Width", type: "length", value: "1024px"},
     {key: "height", label: "Height", type: "length", value: "300px"},
-    {key: "numberformat", label: "Number Format", type: "lov", options: [
-      {label: 'Raw', value: 'raw'},
-      {label: 'Currency', value: 'currency'},
-      {label: 'Thousands separated', value: 'thousands'}
-    ]},
-    {key: "currencysymbol", label: "Currency Symbol", type: "string", value: ""},
     {key: "linecolor", label: "Line Color", type: "color", value: '#46b319'},
     {key: "background", label: "Background Color", type: "color", value: '#fff'}
   ],
@@ -44,6 +38,7 @@
     container.innerHTML = '';
     this.dataModel = new Utils.DataModel(data, fields);
     this.dataModel.indexColumns().setColumnOrder(['group', 'subgroup', 'size']);
+    var indexedFields = this.dataModel.indexedMetaData;
     var nested = this.dataModel.nest();
     var self = this;
 
@@ -53,7 +48,7 @@
       width: props.width,
       height: props.height,
       'background-color': props.background,
-      numericFormat: Utils.format(props.numberformat, {symbol: props.currencysymbol})
+      numericFormat: this.getFormatter(indexedFields.size)
     });
     this.visualization.render();
     this.visualization.addEventListener('filter', function (filters) {
@@ -84,6 +79,12 @@
       });
     }
     this.avoidRefresh = false;
+  },
+  getFormatter: function (field, props) {
+    if (xdo.api.format && field.dataType === 'number')
+      return xdo.api.format(field.dataType, field.formatMask);
+
+    return Utils.format('thousands');
   },
   constructFilters: function (data, context) {
     var group = this.dataModel.indexedMetaData.group.field;
